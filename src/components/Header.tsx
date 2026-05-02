@@ -2,6 +2,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { Heart, Home, LogIn, LogOut, Plus, Tags, UtensilsCrossed } from "lucide-react";
 import { useAuth } from "@/lib/auth-context";
 import { Button } from "@/components/ui/button";
+import { InstallButton } from "@/components/InstallButton";
 
 export function Header() {
   const { user, signOut } = useAuth();
@@ -28,6 +29,7 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-2">
+          <InstallButton />
           {user ? (
             <>
               <Button onClick={() => navigate({ to: "/nova" })} size="sm" className="rounded-full">
