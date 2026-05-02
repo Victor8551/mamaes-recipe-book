@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as NovaRouteImport } from './routes/nova'
 import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as CategoriasRouteImport } from './routes/categorias'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ReceitaIdRouteImport } from './routes/receita.$id'
@@ -24,6 +25,11 @@ const NovaRoute = NovaRouteImport.update({
 const FavoritosRoute = FavoritosRouteImport.update({
   id: '/favoritos',
   path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriasRoute = CategoriasRouteImport.update({
+  id: '/categorias',
+  path: '/categorias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthRoute = AuthRouteImport.update({
@@ -50,6 +56,7 @@ const EditarIdRoute = EditarIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/categorias': typeof CategoriasRoute
   '/favoritos': typeof FavoritosRoute
   '/nova': typeof NovaRoute
   '/editar/$id': typeof EditarIdRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/categorias': typeof CategoriasRoute
   '/favoritos': typeof FavoritosRoute
   '/nova': typeof NovaRoute
   '/editar/$id': typeof EditarIdRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/categorias': typeof CategoriasRoute
   '/favoritos': typeof FavoritosRoute
   '/nova': typeof NovaRoute
   '/editar/$id': typeof EditarIdRoute
@@ -77,16 +86,25 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/categorias'
     | '/favoritos'
     | '/nova'
     | '/editar/$id'
     | '/receita/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/favoritos' | '/nova' | '/editar/$id' | '/receita/$id'
+  to:
+    | '/'
+    | '/auth'
+    | '/categorias'
+    | '/favoritos'
+    | '/nova'
+    | '/editar/$id'
+    | '/receita/$id'
   id:
     | '__root__'
     | '/'
     | '/auth'
+    | '/categorias'
     | '/favoritos'
     | '/nova'
     | '/editar/$id'
@@ -96,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
+  CategoriasRoute: typeof CategoriasRoute
   FavoritosRoute: typeof FavoritosRoute
   NovaRoute: typeof NovaRoute
   EditarIdRoute: typeof EditarIdRoute
@@ -116,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/favoritos'
       fullPath: '/favoritos'
       preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categorias': {
+      id: '/categorias'
+      path: '/categorias'
+      fullPath: '/categorias'
+      preLoaderRoute: typeof CategoriasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth': {
@@ -152,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
+  CategoriasRoute: CategoriasRoute,
   FavoritosRoute: FavoritosRoute,
   NovaRoute: NovaRoute,
   EditarIdRoute: EditarIdRoute,
