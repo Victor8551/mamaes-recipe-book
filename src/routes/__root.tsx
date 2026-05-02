@@ -40,6 +40,10 @@ export const Route = createRootRoute({
       { property: "og:description", content: "Suas receitas favoritas, organizadas com carinho." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Receitas da Mamãe" },
+      { name: "twitter:description", content: "Suas receitas favoritas, organizadas com carinho." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/r34V2iLVvHTCMlL51Z34ZFMABN02/social-images/social-1777740962563-1777740940300.webp" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/r34V2iLVvHTCMlL51Z34ZFMABN02/social-images/social-1777740962563-1777740940300.webp" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
