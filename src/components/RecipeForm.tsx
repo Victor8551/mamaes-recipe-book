@@ -4,7 +4,7 @@ import { Loader2, Upload } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth-context";
-import { CATEGORIES } from "@/lib/categories";
+import { useCategories } from "@/lib/use-categories";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -16,6 +16,7 @@ type Recipe = Tables<"recipes">;
 
 export function RecipeForm({ initial }: { initial?: Recipe }) {
   const { user } = useAuth();
+  const { all: categories } = useCategories();
   const navigate = useNavigate();
   const [name, setName] = useState(initial?.name ?? "");
   const [category, setCategory] = useState(initial?.category ?? "Bolos");
@@ -95,7 +96,7 @@ export function RecipeForm({ initial }: { initial?: Recipe }) {
           <Select value={category} onValueChange={setCategory}>
             <SelectTrigger><SelectValue /></SelectTrigger>
             <SelectContent>
-              {CATEGORIES.map((c) => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              {categories.map((c) => <SelectItem key={c.name} value={c.name}>{c.emoji} {c.name}</SelectItem>)}
             </SelectContent>
           </Select>
         </div>
