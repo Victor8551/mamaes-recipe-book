@@ -9,38 +9,122 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as NovaRouteImport } from './routes/nova'
+import { Route as FavoritosRouteImport } from './routes/favoritos'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ReceitaIdRouteImport } from './routes/receita.$id'
+import { Route as EditarIdRouteImport } from './routes/editar.$id'
 
+const NovaRoute = NovaRouteImport.update({
+  id: '/nova',
+  path: '/nova',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FavoritosRoute = FavoritosRouteImport.update({
+  id: '/favoritos',
+  path: '/favoritos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReceitaIdRoute = ReceitaIdRouteImport.update({
+  id: '/receita/$id',
+  path: '/receita/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EditarIdRoute = EditarIdRouteImport.update({
+  id: '/editar/$id',
+  path: '/editar/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/favoritos': typeof FavoritosRoute
+  '/nova': typeof NovaRoute
+  '/editar/$id': typeof EditarIdRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/favoritos': typeof FavoritosRoute
+  '/nova': typeof NovaRoute
+  '/editar/$id': typeof EditarIdRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/favoritos': typeof FavoritosRoute
+  '/nova': typeof NovaRoute
+  '/editar/$id': typeof EditarIdRoute
+  '/receita/$id': typeof ReceitaIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/favoritos'
+    | '/nova'
+    | '/editar/$id'
+    | '/receita/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/favoritos' | '/nova' | '/editar/$id' | '/receita/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/favoritos'
+    | '/nova'
+    | '/editar/$id'
+    | '/receita/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  FavoritosRoute: typeof FavoritosRoute
+  NovaRoute: typeof NovaRoute
+  EditarIdRoute: typeof EditarIdRoute
+  ReceitaIdRoute: typeof ReceitaIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/nova': {
+      id: '/nova'
+      path: '/nova'
+      fullPath: '/nova'
+      preLoaderRoute: typeof NovaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/favoritos': {
+      id: '/favoritos'
+      path: '/favoritos'
+      fullPath: '/favoritos'
+      preLoaderRoute: typeof FavoritosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,21 +132,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/receita/$id': {
+      id: '/receita/$id'
+      path: '/receita/$id'
+      fullPath: '/receita/$id'
+      preLoaderRoute: typeof ReceitaIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/editar/$id': {
+      id: '/editar/$id'
+      path: '/editar/$id'
+      fullPath: '/editar/$id'
+      preLoaderRoute: typeof EditarIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  FavoritosRoute: FavoritosRoute,
+  NovaRoute: NovaRoute,
+  EditarIdRoute: EditarIdRoute,
+  ReceitaIdRoute: ReceitaIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
